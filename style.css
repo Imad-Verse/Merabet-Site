@@ -15,12 +15,7 @@
     box-sizing: border-box;
 }
 
-html {
-    overflow-x: hidden;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
+
 
 body {
     overflow-x: hidden;
@@ -31,13 +26,8 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     font-family: var(--font-primary);
-    min-height: 100vh;
     position: relative;
     line-height: 1.6;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -76,7 +66,9 @@ body {
 
 .container {
     width: 100%;
-    max-width: 650px; /* Increased for a wider, more relaxed layout on desktop */
+    max-width: 650px;
+    margin: 0 auto;
+    min-height: 100vh;
     padding: 3rem 2rem 0 2rem; /* Zero bottom padding */
     z-index: 10;
     display: flex;
@@ -100,6 +92,8 @@ body {
     padding-bottom: 2rem;
     box-shadow: 0 10px 30px rgba(0,0,0,0.25);
     animation: dropIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
 }
 
 .cover-wrapper {
@@ -236,6 +230,8 @@ body {
     animation: fadeUp 0.8s ease forwards;
     position: relative;
     overflow: hidden;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
 }
 
 /* Create a subtle hover light effect */
@@ -347,6 +343,8 @@ body {
     opacity: 0;
     transform: translateY(20px);
     animation-delay: 0.8s;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
 }
 
 .audio-info {
@@ -469,6 +467,8 @@ body {
     animation: fadeUp 0.8s ease forwards;
     opacity: 0;
     transform: translateY(20px);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
 }
 
 .quote-card:nth-child(1) { animation-delay: 1s; }
