@@ -45,6 +45,7 @@ body {
     flex-direction: column;
     transform: translate3d(0, 0, 0); /* Force GPU Layer */
     backface-visibility: hidden;
+    overflow: hidden; /* Clips background shapes from extending page height */
 }
 
 /* Background Shapes for Glassmorphism effect */
@@ -546,7 +547,7 @@ body {
 footer {
     text-align: center;
     margin-top: auto; /* Pushes footer exactly to the bottom of the visible screen */
-    padding: 1.5rem 0; /* Identical top and bottom padding */
+    padding: 2rem 0; /* Changed from 1.5rem to 2rem to balance spacing */
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     color: #475569;
     font-size: 0.95rem;
