@@ -17,10 +17,18 @@
 
 
 
-body {
+html, body {
     width: 100%;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    touch-action: pan-y;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
     background-color: var(--bg-color);
     color: var(--text-color);
     font-family: var(--font-primary);
@@ -30,12 +38,13 @@ body {
 }
 
 .site-wrapper {
-    overflow-x: hidden;
     width: 100%;
     position: relative;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    transform: translate3d(0, 0, 0); /* Force GPU Layer */
+    backface-visibility: hidden;
 }
 
 /* Background Shapes for Glassmorphism effect */
@@ -675,5 +684,61 @@ footer {
     }
     .platform-name { 
         font-size: 1rem; 
+    }
+}
+
+/* Scroll to Top Button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 54px;
+    height: 54px;
+    background: linear-gradient(135deg, #d4af37, #f1cf5a); /* Premium Gold Gradient */
+    color: #0b1120;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3rem;
+    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4), 
+                inset 0 2px 5px rgba(255, 255, 255, 0.4);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(30px) scale(0.8);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.scroll-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.scroll-to-top:hover {
+    transform: translateY(-8px) scale(1.1);
+    box-shadow: 0 12px 30px rgba(212, 175, 55, 0.6),
+                inset 0 2px 8px rgba(255, 255, 255, 0.5);
+    background: linear-gradient(135deg, #f1cf5a, #ffffff);
+}
+
+.scroll-to-top:active {
+    transform: translateY(-2px) scale(0.95);
+}
+
+/* Mobile adjustments for Scroll to Top button */
+@media (max-width: 480px) {
+    .scroll-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 48px;
+        height: 48px;
+        font-size: 1.1rem;
     }
 }
