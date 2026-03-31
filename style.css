@@ -15,8 +15,18 @@
     box-sizing: border-box;
 }
 
+html {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
     max-width: 100%;
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -342,6 +352,8 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex: 1;
+    min-width: 0;
 }
 
 .audio-icon-wrapper {
@@ -368,6 +380,8 @@ body {
 .audio-texts {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    min-width: 0;
 }
 
 .audio-title {
@@ -375,6 +389,7 @@ body {
     font-weight: 700;
     color: #fff;
     letter-spacing: 0.2px;
+    white-space: normal;
 }
 
 .audio-status {
@@ -385,6 +400,7 @@ body {
 .audio-controls {
     display: flex;
     gap: 0.8rem;
+    flex-shrink: 0;
 }
 
 .audio-btn {
@@ -485,6 +501,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
+    flex: 1;
+    min-width: 0;
 }
 
 .quote-author {
@@ -598,7 +616,18 @@ footer {
         max-width: 100%;
     }
     .audio-card {
-        padding: 0.8rem 1rem;
+        padding: 1.2rem 1rem;
+        flex-direction: column;
+        gap: 1.2rem;
+        text-align: center;
+    }
+    .audio-info {
+        flex-direction: column;
+        gap: 0.8rem;
+        text-align: center;
+    }
+    .audio-texts {
+        align-items: center;
     }
     .audio-title {
         font-size: 0.95rem;
