@@ -107,7 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
                              promise.catch(e => console.log("Audio play prevented temporarily"));
                          }
                      }
-                     document.removeEventListener('click', startAudioOnInteraction);
                 };
                 document.addEventListener('click', startAudioOnInteraction, { once: true });
             }

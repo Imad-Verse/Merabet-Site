@@ -697,7 +697,6 @@ footer {
     height: 54px;
     background: linear-gradient(135deg, #d4af37, #f1cf5a); /* Premium Gold Gradient */
     color: #0b1120;
-    border: none;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
