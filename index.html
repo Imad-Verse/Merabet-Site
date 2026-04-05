@@ -27,6 +27,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
     <!-- CSS styles -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -89,6 +92,25 @@
                 <i class="fa-solid fa-arrow-up-right-from-square arrow"></i>
             </a>
         </section>
+
+        <!-- YouTube Slider Start -->
+        <section class="youtube-slider-section">
+            <div class="section-header">
+                <i class="fa-brands fa-youtube" style="color: #FF0000;"></i>
+                <h2 class="section-title">آخر مرئيات القناة</h2>
+            </div>
+            <div class="swiper youtube-swiper">
+                <div class="swiper-wrapper" id="youtube-slides">
+                    <!-- Slides injected via JS -->
+                    <div class="swiper-slide loading-slide">
+                        <div class="loader"></div>
+                        <span>جاري تحميل الفيديوهات...</span>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
+        <!-- YouTube Slider End -->
 
         <!-- Audio Player Section -->
         <section class="audio-section">
@@ -181,6 +203,9 @@
     <button id="scrollToTop" class="scroll-to-top" title="العودة للأعلى" aria-label="العودة للأعلى">
         <i class="fa-solid fa-chevron-up"></i>
     </button>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script src="script.js"></script>
 </body>

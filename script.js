@@ -158,4 +158,107 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // YouTube Slider Start
+    const YOUTUBE_API_KEY = 'AIzaSyBq_pDf5Pbmh6CGDbogg2pH7ycFz0WKo2o';
+    const YOUTUBE_CHANNEL_ID = 'UCfVZIZbXhhMdEDQD__NwD4w';
+    const CACHE_KEY = 'youtube_videos_cache';
+    const CACHE_TIME = 60 * 60 * 1000; // 1 hour
+
+    async function fetchYouTubeVideos() {
+        const cachedData = localStorage.getItem(CACHE_KEY);
+        if (cachedData) {
+            try {
+                const { timestamp, videos } = JSON.parse(cachedData);
+                if (Date.now() - timestamp < CACHE_TIME) {
+                    console.log('Using cached YouTube data');
+                    return videos;
+                }
+            } catch (e) {
+                console.error('Error parsing cache:', e);
+            }
+        }
+
+        try {
+            const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&maxResults=10&channelId=${YOUTUBE_CHANNEL_ID}&key=${YOUTUBE_API_KEY}&type=video`);
+            const data = await response.json();
+            
+            if (data.items) {
+                const videos = data.items.map(item => ({
+                    id: item.id.videoId,
+                    title: item.snippet.title,
+                    thumbnail: item.snippet.thumbnails.high.url
+                })).filter(v => v.id); // Ensure it's a video
+                
+                const finalVideos = videos.slice(0, 6);
+                
+                localStorage.setItem(CACHE_KEY, JSON.stringify({
+                    timestamp: Date.now(),
+                    videos: finalVideos
+                }));
+                
+                return finalVideos;
+            }
+        } catch (error) {
+            console.error('Error fetching YouTube videos:', error);
+        }
+        return null;
+    }
+
+    function renderYouTubeVideos(videos) {
+        const container = document.getElementById('youtube-slides');
+        if (!container) return;
+
+        if (!videos || videos.length === 0) {
+            container.innerHTML = '<div class="swiper-slide loading-slide">تعذر تحميل الفيديوهات حالياً</div>';
+            return;
+        }
+
+        container.innerHTML = videos.map(video => `
+            <div class="swiper-slide">
+                <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank" rel="noopener noreferrer" class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="${video.thumbnail}" alt="${video.title}" loading="lazy">
+                        <div class="play-icon-overlay">
+                            <i class="fa-solid fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">${video.title}</h3>
+                    </div>
+                </a>
+            </div>
+        `).join('');
+    }
+
+    function initYouTubeSwiper() {
+        new Swiper('.youtube-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: videosData && videosData.length > 1,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                }
+            }
+        });
+    }
+
+    let videosData = null;
+    (async () => {
+        videosData = await fetchYouTubeVideos();
+        renderYouTubeVideos(videosData);
+        initYouTubeSwiper();
+    })();
+    // YouTube Slider End
 });
