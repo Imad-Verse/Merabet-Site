@@ -261,4 +261,91 @@ document.addEventListener('DOMContentLoaded', () => {
         initYouTubeSwiper();
     })();
     // YouTube Slider End
+
+    // Image Galleries Logic Start
+    const GALLERY_JSON = 'gallery.json';
+    let galleryDataCache = null;
+
+    async function fetchGalleryData() {
+        if (galleryDataCache) return galleryDataCache;
+
+        try {
+            const response = await fetch(GALLERY_JSON);
+            const data = await response.json();
+            galleryDataCache = data;
+            return data;
+        } catch (error) {
+            console.error('Error fetching gallery.json:', error);
+            return null;
+        }
+    }
+
+    function renderGallery(galleryType, imagePaths) {
+        const container = document.getElementById(`${galleryType}-slides`);
+        if (!container) return;
+
+        if (!imagePaths || imagePaths.length === 0) {
+            container.innerHTML = `<div class="swiper-slide loading-slide">تحت العمل...</div>`;
+            return;
+        }
+
+        container.innerHTML = imagePaths.map(path => `
+            <div class="swiper-slide">
+                <a href="${path}" class="glightbox" data-gallery="${galleryType}">
+                    <div class="image-card">
+                        <img src="${path}" alt="صورة ${galleryType}" loading="lazy">
+                        <div class="image-overlay">
+                            <span class="view-btn">عرض الصورة</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        `).join('');
+    }
+
+    function initGallerySwiper(galleryType) {
+        new Swiper(`.${galleryType}-swiper`, {
+            slidesPerView: 2,
+            spaceBetween: 15,
+            loop: true,
+            autoplay: {
+                delay: 4500 + Math.random() * 1000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                480: { slidesPerView: 2.2, spaceBetween: 15 },
+                640: { slidesPerView: 3, spaceBetween: 20 },
+                1024: { slidesPerView: 3, spaceBetween: 20 }
+            }
+        });
+    }
+
+    async function initGalleries() {
+        const galleryData = await fetchGalleryData();
+        if (!galleryData) return;
+
+        // Matwiya
+        renderGallery('matwiya', galleryData.matwiya);
+        initGallerySwiper('matwiya');
+
+        // Bitaqa
+        renderGallery('bitaqa', galleryData.bitaqa);
+        initGallerySwiper('bitaqa');
+
+        // Initialize GLightbox
+        GLightbox({
+            selector: '.glightbox',
+            touchNavigation: true,
+            loop: true,
+            zoomable: true
+        });
+    }
+
+    initGalleries();
+    // Image Galleries Logic End
 });
