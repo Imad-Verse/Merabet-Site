@@ -365,7 +365,7 @@ body {
     font-family: var(--font-heading);
 }
 
-.youtube-swiper {
+.youtube-swiper, .matwiya-swiper, .bitaqa-swiper {
     width: 100%;
     padding: 10px 0 45px 0 !important;
 }
